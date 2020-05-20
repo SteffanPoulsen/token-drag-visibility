@@ -46,7 +46,6 @@ Hooks.on('controlToken', (token, hasControl) => {
     if (!hasControl && (focusToken == undefined || token.data._id == focusToken.data._id)) {
         canvas.sight.visible = false;
         focusToken = undefined;
-        hoverToken = undefined;
     }
 });
 
