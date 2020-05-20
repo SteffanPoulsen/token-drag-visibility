@@ -8,8 +8,8 @@ Hooks.on('ready', function() {
 
     window.addEventListener("mousedown", function(ev) {
         if (ev.button != 0 || hoverToken == undefined) return;
+
         focusToken = hoverToken;
-        
         inputDelta = 0;
         exceededThreshold = false;
     });
@@ -27,6 +27,7 @@ Hooks.on('ready', function() {
 
     window.addEventListener("mouseup", function() {
         if (focusToken == undefined) return;
+
         if (focusToken.data.vision && focusToken.owner) canvas.sight.visible = true;
         focusToken = undefined;
     });
@@ -34,10 +35,13 @@ Hooks.on('ready', function() {
 
 Hooks.on("hoverToken", (token, isHovering) => {
     if (!game.user.isGM || focusToken != undefined) return;
+
     hoverToken = isHovering? token : undefined;
 });
 
 Hooks.on('controlToken', (token, hasControl) => {
+    if (!game.user.isGM) return;
+
     //Lost control of token, reenable vision
     if (!hasControl && (focusToken == undefined || token.data._id == focusToken.data._id)) {
         canvas.sight.visible = false;
