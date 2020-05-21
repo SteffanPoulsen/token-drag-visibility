@@ -1,7 +1,7 @@
 {   
     "name": "token-drag-visibility",   
-    "title": "Token Drag Visibility",   
-    "description": "Disables the vision limitation when dragging a character token. Useful for moving players between floors on the same map.",   
+    "title": "GM Token Drag Visibility",   
+    "description": "Disables the vision limitation when dragging a character token, as a GM. Useful for moving players between floors on the same map.",   
     "author": "Steffan Poulsen",
     "url": "https://github.com/SteffanPoulsen/token-drag-visibility",
     "version": "0.1.2",
