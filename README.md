@@ -12,7 +12,7 @@ A [FoundryVTT](http://foundryvtt.com/) module that disables the vision limitatio
 
 ## Alternative
 
-1. Download [this zip file](https://github.com/)
+1. Download [this zip file](https://github.com/SteffanPoulsen/token-drag-visibility/raw/master/dist/token-drag-visibility.zip)
 2. Extract it into the `<FoundryVTT directory>/data/modules`-folder
 
 # Compatibility
