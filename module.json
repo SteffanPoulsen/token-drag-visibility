@@ -4,7 +4,7 @@
     "description": "Disables the vision limitation when dragging a character token. Useful for moving players between floors on the same map.",   
     "author": "Steffan Poulsen",
     "url": "https://github.com/SteffanPoulsen/token-drag-visibility",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "minimumCoreVersion": "0.5.0",
     "compatibleCoreVersion": "0.5.7",
     "scripts": ["./tokendragvisibility.js"]
