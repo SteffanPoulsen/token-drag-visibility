@@ -16,7 +16,7 @@ Hooks.on('ready', function() {
     });
 
     window.addEventListener('mousemove', function(ev) {
-        if (exceededThreshold || focusToken == undefined) return;
+        if (exceededThreshold || focusToken == undefined || !inputDown) return;
         
         inputDelta += Math.abs(event.movementX) + Math.abs(event.movementY);
 
