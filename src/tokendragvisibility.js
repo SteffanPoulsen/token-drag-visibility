@@ -1,8 +1,7 @@
-var focusToken;
-var hoverToken;
 var inputDelta = 0;
 var exceededThreshold = false;
 var inputDown = false;
+var hasValidToken = false;
 
 Hooks.on('ready', function() {
     window.addEventListener("mousedown", checkDragBegin);
@@ -12,48 +11,46 @@ Hooks.on('ready', function() {
 
 function checkDragBegin(ev) {
     if (!game.user.isGM) return;
-
     inputDown = true;
-    if (ev.button != 0 || focusToken == undefined || focusToken != hoverToken) return;
 
-    inputDelta = 0;
-    exceededThreshold = false;
+    //Check to see if any of the controlled tokens use sight
+    //Check to see if any token is interactive and user is hovering
+    var controlled = canvas.activeLayer.controlled;
+    var hasSightToken = false;
+    for (var i=0;i<controlled.length;i++) {
+        if (controlled[i].data.vision) hasSightToken = true;
+        if (controlled[i].interactive && controlled[i]._hover && hasSightToken) {
+            hasValidToken = true;
+            break;
+        }
+    }
 }
 
 function checkDragMove() {
     if (!game.user.isGM) return;
+    if (!inputDown || exceededThreshold || !hasValidToken) return;
 
-    if (exceededThreshold || focusToken == undefined || !inputDown) return;
-        
     inputDelta += Math.abs(event.movementX) + Math.abs(event.movementY);
 
     if (inputDelta > 32) {
-        canvas.sight.visible = false;
         exceededThreshold = true;
+        showTokenVision(false);
     }
 }
 
 function checkDragEnd() {
     if (!game.user.isGM) return;
-
     inputDown = false;
-    if (focusToken == undefined) return;
-    if (focusToken.data.vision && focusToken.owner) canvas.sight.visible = true;
+    exceededThreshold = false;
+
+    if (!hasValidToken) return;
+    showTokenVision(true);
+    hasValidToken = false;
 }
 
-Hooks.on("hoverToken", (token, isHovering) => {
-    if (!game.user.isGM || inputDown) return;
-    hoverToken = isHovering? token : undefined;
-});
+function showTokenVision(state) {
+    canvas.sight.visible = state;
+}
 
-Hooks.on('controlToken', (token, hasControl) => {
-    if (!game.user.isGM) return;
 
-    if (hasControl) {
-        focusToken = token;
-        hoverToken = token;
-    } else if (focusToken == undefined || token.data._id == focusToken.data._id) {
-        canvas.sight.visible = false;
-        focusToken = undefined;
-    }
-});
+
