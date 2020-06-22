@@ -24,7 +24,7 @@ Hooks.on('ready', function() {
 });
 
 function getActiveSceneVision() {
-    return game.scenes.active.data.tokenVision;
+    return canvas.scene.data.tokenVision;
 }
 
 function checkDragBegin(ev) {
@@ -67,7 +67,7 @@ function checkDragEnd() {
 }
 
 function setTokenVision(state) {
-    game.scenes.active.data.tokenVision = state;
+    canvas.scene.data.tokenVision = state;
     canvas.sight.update();
 }
 

@@ -1,3 +1,7 @@
+# 1.1.1
+
+* Now works based on the currenly viewed scene, and not the "active" scene
+
 # 1.1.0
 
 * Fixed a bug that caused the screen to black out on scenes not using token vision
