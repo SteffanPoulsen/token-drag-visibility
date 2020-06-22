@@ -7,10 +7,28 @@ Hooks.on('ready', function() {
     window.addEventListener("mousedown", checkDragBegin);
     window.addEventListener('mousemove', checkDragMove);
     window.addEventListener("mouseup", checkDragEnd);
+
+
+    //Maybe change to something like this instead of using the input events
+    // const original = PlaceablesLayer.prototype._onDragLeftStart;
+    // console.log(original);
+    // PlaceablesLayer.prototype._onDragLeftStart = (...args) => { 
+    //     console.log("_onDragLeftStart");
+    //     listener(); 
+    //     return original.apply(this, args); 
+    // }
+
+    // PlaceablesLayer.prototype._onDragLeftStart = function() {
+    //     console.log("_onDragLeftStart");
+    // }
 });
 
+function getActiveSceneVision() {
+    return game.scenes.active.data.tokenVision;
+}
+
 function checkDragBegin(ev) {
-    if (!game.user.isGM) return;
+    if (!game.user.isGM || !getActiveSceneVision()) return;
     inputDown = true;
 
     //Check to see if any of the controlled tokens use sight
@@ -27,29 +45,30 @@ function checkDragBegin(ev) {
 }
 
 function checkDragMove() {
-    if (!game.user.isGM) return;
+    if (!game.user.isGM || !getActiveSceneVision()) return;
     if (!inputDown || exceededThreshold || !hasValidToken) return;
 
     inputDelta += Math.abs(event.movementX) + Math.abs(event.movementY);
 
     if (inputDelta > 32) {
         exceededThreshold = true;
-        showTokenVision(false);
+        setTokenVision(false);
     }
 }
 
 function checkDragEnd() {
-    if (!game.user.isGM) return;
+    if (!game.user.isGM || !inputDown) return;
     inputDown = false;
     exceededThreshold = false;
 
     if (!hasValidToken) return;
-    showTokenVision(true);
+    setTokenVision(true);
     hasValidToken = false;
 }
 
-function showTokenVision(state) {
-    canvas.sight.visible = state;
+function setTokenVision(state) {
+    game.scenes.active.data.tokenVision = state;
+    canvas.sight.update();
 }
 
 

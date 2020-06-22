@@ -1,3 +1,8 @@
+# 1.1.0
+
+* Fixed a bug that caused the screen to black out on scenes not using token vision
+* Changed the method of disabling token vision - it now works as intended, showing a "true" GM vision with all tokens etc.
+
 # 1.0.3
 
 * Minimum version for the module is now 0.6.0.
